@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await post.render();
+---
+
+<Layout title={post.data.title}>
+  <h2>{post.data.title}</h2>
+  <p class="text-left">
+    <time datetime={post.data.publishDate.toISOString()}>
+      {new Intl.DateTimeFormat("ja-JP").format(post.data.publishDate)}
+    </time>
+  </p>
+
+  <Content />
+  <h3>この記事のタグ</h3>
+  <ul>
+    {
+      post.data.tags &&
+        post.data.tags.map((tag: any) => (
+          <li>
+            <a href={`/tags/${tag}`}>{tag}</a>
+          </li>
+        ))
+    }
+  </ul>
+</Layout>

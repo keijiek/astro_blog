@@ -1,0 +1,43 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import Head from "./Head/Head.astro";
+import Header from "./Header/Header.astro";
+import ContentWrap from "./ContentWrap/ContentWrap.astro";
+
+const headerFooterColor = "bg-stone-950 text-white";
+const webSiteName = "keijie.com";
+
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+const titleValue = title ? title + " | " + webSiteName : webSiteName;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <Head />
+    <title>{titleValue}</title>
+    <ViewTransitions />
+  </head>
+
+  <body>
+    <header class={headerFooterColor}>
+      <ContentWrap>
+        <Header {webSiteName} />
+      </ContentWrap>
+    </header>
+    <main class="">
+      <ContentWrap>
+        <slot />
+      </ContentWrap>
+    </main>
+    <footer class={headerFooterColor}>
+      <ContentWrap>
+        <p class="text-center">&copy;&nbsp;keijiek.com&nbsp;2024</p>
+      </ContentWrap>
+    </footer>
+  </body>
+</html>

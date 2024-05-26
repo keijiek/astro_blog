@@ -1,0 +1,17 @@
+---
+interface Props {
+  webSiteName: string;
+}
+const { webSiteName } = Astro.props;
+---
+
+<div class="flex gap-12 items-center" role="presentation">
+  <h1 class="text-3xl"><a href="/">{webSiteName}</a></h1>
+  <nav>
+    <ul class="flex gap-4 text-lg">
+      <li><a href="/">home</a></li>
+      <li><a href="/blog">blog</a></li>
+      <li><a href="/tags">tags</a></li>
+    </ul>
+  </nav>
+</div>
